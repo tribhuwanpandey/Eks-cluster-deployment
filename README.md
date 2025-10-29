@@ -1,31 +1,33 @@
-# 🚀 EKS Cluster Deployment Using Terraform (Manual Setup)
+# ☸️ AWS EKS Cluster Deployment using Jenkins
 
-This Terraform project provisions an **Amazon EKS cluster** along with a **node group** using manually defined AWS resources — no external Terraform modules are used.
+This repository contains scripts and configuration files to create and configure an AWS EKS Cluster using Jenkins.
 
-It includes:
-- EKS Control Plane setup
-- EKS Node Group (Managed nodes)
-- IAM roles and policy attachments
-- Custom VPC subnet selection using tag filters
+##  Tools & Services
+- AWS CLI
+- kubectl
+- Terraform or eksctl
+- Jenkins (trigger for automation)
 
----
+##  Pipeline Flow
+1. Jenkins triggers the EKS setup job.
+2. AWS EKS cluster is created (`project-cluster`).
+3. kubeconfig is updated using:
+   ```bash
+   aws eks update-kubeconfig --region ap-south-1 --name project-cluster
+   ```
 
-##  Features
+## Cluster Deployment using Jenkins
 
--  Custom EKS cluster setup using low-level AWS resources
--  EKS Managed Node Group with `t2.micro` instances
--  VPC Subnet discovery using tag filter (`Our-Public-*`)
--  IAM role and policy attachments for EKS and worker nodes
--  Outputs for endpoint and certificate authority
+![alt text](<Screenshot 2025-10-29 154527.png>)
 
----
+## Cluster created
 
+![alt text](<Screenshot 2025-10-29 154544.png>)
 
-##  File Structure
+## Node group
 
-eks-terraform/
-├── main.tf # Terraform EKS + node group setup
-├── variables.tf # Input variables (optional)
-├── outputs.tf # Output values (optional)
-├── terraform.tfvars # Variable values (optional)
-└── README.md # Project documentation
+![alt text](<Screenshot 2025-10-29 154613.png>)
+
+## Cluster overview
+
+![alt text](<Screenshot 2025-10-29 154638.png>)
