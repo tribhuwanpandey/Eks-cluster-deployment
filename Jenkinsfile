@@ -12,33 +12,33 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/tribhuwanpandey/eks-cluster-deployment-.git'
-            }
-        }
-    
-        stage ("terraform init") {
-            steps {
-                sh ("terraform init -reconfigure") 
-            }
-        }
-        
-        stage ("plan") {
-            steps {
-                sh ('terraform plan') 
+                git branch: 'main', url: 'https://github.com/tribhuwanpandey/Eks-cluster-deployment.git'
             }
         }
 
-        stage (" Action") {
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init -reconfigure'
+            }
+        }
+
+        stage('Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+
+        stage('Action') {
             steps {
                 script {
                     switch (params.ACTION) {
                         case 'apply':
                             echo 'Executing Apply...'
-                            sh "terraform apply --auto-approve"
+                            sh 'terraform apply --auto-approve'
                             break
                         case 'destroy':
                             echo 'Executing Destroy...'
-                            sh "terraform destroy --auto-approve"
+                            sh 'terraform destroy --auto-approve'
                             break
                         default:
                             error 'Unknown action'
